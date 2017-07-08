@@ -1,1 +1,132 @@
+---------------------------------------------------------[   PA1 README   ]---
+
+Author: Hwa Chien Hong
+Userid: cs30xnp
+PID: A92072250
+Date: March 12, 2017
+
+---------------------------------------------------------[  DESCRIPTION   ]---
+
+PA4 is an assignment that helps us to get more practice with standard C Library
+routines and dynamic memory allocation on the heap using malloc(), and
+realloc(), sorting using qsort(), and other comparison functions, reading data
+from input files with fopen(), fclose(), fgets(), and other string manipulation
+methods using functions like strelen(), strcmp()/strncmp(),
+strcasecmp()/strncasecmp(), and strncpy(). We will also be using getopt_long(),
+enum, and bitmasks/bitmaps. 
+
+The correct output of the program is as followed: once the user successfult
+compiles the program and runs the program. He/she can enter an array of flags to
+determine the ouputs of the program. There are a total of 8 flags, ranging from
+duplicate, unique, counts, ignore case, reverse, sort, timecompare, and help to
+display all the possible options. Once the flags are entered into the program,
+the user can type in the file names following these commands for the program to
+parse. Once the filenames are parsed, a series of opening, saving, sorting of
+the files will be done. Ultimately, the results displayed are the lines from the
+files speicified by the user, either represented uniqely, in duplicates, or in
+other forms specified. 
+
+The program itself more specifically starts at main. Main is the place where the
+command line flags are parsed. This is done through the getopt_long function.
+The flags are then mapped into the form of bits. The final representation of the
+flags is then passed into various functions to decides what is to be printed by
+what files. After the error conditions and edge cases are detected, we move on
+to parse the filenames of the command line. Once this is donw, we cann sortFiles
+to sort the file contents, in other words, the actual lines in these files. This
+returns an array of FILES, which we then pass to mergeFiles, to create an array
+of fileLines populated with every single line from all files. 
+Depending on whether the S and I flags are set, we also sort the result case
+sensitively or case insensitively. 
+
+In the end, we pass the result from buildData to the displayoutput function
+where we display the line contents in reverse and/or with the count of each line
+in the file.
+
+---------------------------------------------------------[     TESTING    ]---
+To test these files, the indivudal functions each have their own tester files.
+I.e to test timeCompare,  I tried creating multiple different files and 
+see if I am actually taking care of the comparisons correctly. THe similar
+process is done for filenameCompare and their reversed versions. To test for
+bugger functions such as buildData, and mergeFiles, I also created subfiles to
+test their correctness. 
+But Once I finsihed the files, I had to test whether
+they have compile error or not. So I either insert these methods inside the
+testsortfiles tester or just simply did command line compiles to resolve all the
+compile errors I had. Main was specifically more difficult for me as I needed to
+test whether each commands are being parsed correctly. To test for that I
+actually printed out all different combinations of bit result as I orred them
+with the constants. Only when the results were correct was I able to be sure
+that my getopt_long was correct. Then I would move on to the larger files such
+mergeFiles and buildData.
+---------------------------------------------------------[  COMPILATION   ]---
+
+in order to successfully compile all the programs/files at once, the make 
+command is used, namely 
+
+	$ make 
+
+After the programs are compiled with no issues, they are ran by typing the 
+following commands 
+
+	$ ./pa4 [FLAGS] [FILENAMES]
+
+	i.e 
+
+	$ ./pa4 --sort file1 file2 file3
+
+It is important to note that certain flags are mutually exclusive namely the u
+and d flags. They cannot be entered together at once. each file names must be
+entered with a single space in between them. Also we can enter the flags by its
+long version (i.e --sort) or just the shorthand char version (i.e -s).
+
+To test/run the testerfiles, we have to do
+	$ make test[FILENAME]
+	$ ./[FILENAME]
+for different testfiles just simply replace the [FILENAME]
+
+---------------------------------------------------------[ SAMPLE OUTPUT  ]---
+
+Normal output: 
+
+$./pa4 -d filea fileb
+
+$ filea and fileb have the same second line
+
+-----[The contents of filea]-----
+this is the first line of file a
+filea and fileb have the same second line
+this is the third line of file a
+FILEA AND FILEB HAVE THE SAME FOURTH LINE IGNORING CASE
+
+-----[The contents of fileb]-----
+this is the first line of file b
+filea and fileb have the same second line
+this is the third line of file b
+filea and fileb have the same fourth line ignoring case
+
+Above shows the normal output if we have the file contents listed as above and
+we wanted to show the duplicate lines between these two files. As a result, only
+the second line exists between these files, therfore the second line of both the
+file is displayed. The outputs all go to stdout, and the errors, where we
+fprints, all goes to stderr. 
+
+Abnormal output: 
+
+$./pa4 
+
+Usage: ./pa4 [-d|-u] [-cirst] [inputfiles]
+       ./pa4 -h for long help
+
+Since it is required to enter filenames and the neccessary file flags, the above
+example shows when the flags are not entered and filenames are not entered. THe
+result of this is a short usage message to hint the user how to use the
+commands. If the user chooses to put the -h flags, then the long version
+explaining each command will be explained. 
+
+---------------------------------------------------------[ Q  &  A  ]---------
+1. I think the most straight forward way is to direct them to help provided by
+the tutors and the professor. Just simply letting them know that there are other
+sources where they can receive help can benefit them largely. Also remind them
+that as we enter the work force, integrity is an integral part of a great
+software engineer. 
 
