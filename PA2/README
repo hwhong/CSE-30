@@ -1,1 +1,192 @@
+---------------------------------------------------------[   PA2 README   ]---
+
+Author: Hwa Chien Hong
+Userid: cs30xnp
+PID: A92072250
+Date: Feb 22, 2017
+
+---------------------------------------------------------[  DESCRIPTION   ]---
+
+PA2 is an assignment that help us to learn more SPARC assembly and become
+familiar with additional Standard C library routines. That is using load and
+store instructions in C to access memory locations, performing 64-bits
+operations across two 32 bit registers maintaining this data in an array of two
+ints in memory, access global data, read input from either stdin or a file, and
+some good C preprocessor and C language uses.
+
+The correct output of the program is as followed: once the user compiles the
+program he or she can enter a series of commands to manipulate lights, which is
+represented as - and * depending on whether the lights are on or off. The
+possible instructions which the user can enter are SET, CLEAR, TOGGLE, SHIFT,
+ROTATE, RIPPLE, HELP, and QUIT.
+
+Below lists the description of each indivdual files : 
+
+checkCmd: this file helps us check whether the user has entered a valid command
+or not. Valid commands are commands such as set, clear, toggle, shift, rotate,
+ripple, help, and quit. 
+
+clear.c: this function clears the lights in the lightbank based on which bits are
+set in the bit patterns passed in.
+
+displaylights.s: this assembly routine displays the lights based on what bits
+are set in the lightBank. If the bit is set, * will be printed. else the bit is
+not set, where - will be printed instead. 
+
+printChar.s: this assembly routine was taken directly from the previous PA,
+where it prints the char that was passed in. 
+
+ripple.s: this function rotates the current light patterns in the light bank by
+the rippleCnt passed in. After each ripple operation, displaylights is called to
+display the current state of the lightbank. if positive, rotate left, else
+right.
+
+rotate.s: this assembly subroutine rotates the current light patterns in the
+light banks by rotateCnt places. if positve, rotate left, else rotate right.
+
+set.s: this assembly subroutine sets the lights in the lightbank based on which
+bits are set in the bit patterns passed in. pattern0 is the first 32 lights,
+while pattern1 is the second half.
+
+shift.s: this assembly routine shifts the current light patterns in the light
+banks by shiftcnt places. if positive, shift left, else shift right.
+
+toggle.s: this function toggles the lights in the lightbank based on which bits
+are set in the bit patterns passed in. pattern0 represents the first 32 bit
+pattern where pattern1 represents the second half. 
+
+main.c: the main c file where it handles all the possible operations given. the
+user can directly manages mutiple commands by passing in a file filled with
+commands. 
+
+---------------------------------------------------------[     TESTING    ]---
+To test these files, the indivudal subroutines each have their own tester files.
+I.e to test isInBound, I tried multiple negative values and positive values to
+see if I am actually taking care of shifting correctly. To test for displaylight, I
+manually found out all the bit patterns then check the response one by one
+against the printed output.  
+To test the main function, I went through all the possible invalid commands, and
+the valid commands given inside the writeup. for checkCmd, it was slighty easier
+to test for since all the commands are given. But to further make sure, I made
+seperate arrays containing other kinds of strings, and tested against strings in
+the array and strings that are not. 
+To test for ripple, I used the main function's correct output and see if it
+actually shift the bits the prints it one at a time. 
+---------------------------------------------------------[  COMPILATION   ]---
+
+in order to successfully compile all the programs/files at once, the make 
+command is used, namely 
+
+	$ make 
+
+After the programs are compiled with no issues, they are ran by typing the 
+following commands 
+
+	$ ./pa2
+
+After successful compilation, a cursor will appear prompting the user to enter
+valid inputs. i.e set 0x00 0x00 . some commands require two inputs/arguments.
+And they are set, toggle, and clear. 
+Also, in order to compile these programs, we have
+to be in the pa1 directory. Once all the routines are linked, then we can print
+out the desire output. 
+
+To test/run the testerfiles, we have to do
+	$ make test[FILENAME]
+	$ ./[FILENAME]
+for different testfiles just simply replace the [FILENAME]
+
+---------------------------------------------------------[ SAMPLE OUTPUT  ]---
+
+Normal output: 
+
+$./pa2 
+
+$ > set 0xf0f0f0f0f0 0x01010101
+**** ---- **** ---- **** ---- **** ---- ---- ---* ---- ---* ---- ---* ---- ---*
+
+$ > clear 0xf0f0f0f0 0x01010101
+---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- 
+
+Above shows the normal output if we wanted to set the initial starting lightbank
+with bit patterns of 0xf0f0f0f0 and 0x01010101. After setting, we are clearing
+all the bits by the bit patterns of itself. 
+
+Abnormal output: 
+
+$./pa2 
+
+$ > se
+
+	Bad command. Type "help" for more info 
+
+$ > set 0x00
+
+	A 2nd argument is required for this command
+
+$ > set 9inchNails 999999999999999999999
+	
+	"9inchNails" is not an integer 
+
+Above shows the abnormal outputs when commands needed 2 arguments, invalid
+command entered, or enterinf the wrong type of argument. 
+
+---------------------------------------------------------[    Q and A     ]---
+
+1. the mv command allows you to rename a file 
+
+2. the cp command to copy a file. i.e cp [file1] [file2] 
+
+3. it copies the selected text.
+
+4. .vimrc file is a file where the we could save all the preferences and setting
+    to our vim environment. Create the file by typing the below command
+
+    $ vim .vimrc
+
+5. in view mode, press the v click then use the arrow keys to traverse through
+   the wanted text. To paste, move to the position where you want to paste, and
+   press the p key.
+
+6. to look for a string first press esc to enter visual mode, and enter the
+   following command, replacing STRING with the word you wish to search for
+
+   $ /[STRING]
+
+7. to display line number, use the following commands 
+  
+   $ :set number 
+
+8. by typing the following command, we can navigate from one dir to home then
+   foobar
+
+   $ cd ../foobar 
+
+9. using the command chmod. i.e 
+
+   $ chmod -rwxrwxrwx file <-- gives access to everyone 
+
+10. professional engineers are expected to act with integrity because it is
+    unfair to claim someone else's work as your own. Especially when engineers
+    are the people who are taught and encourage to bring innovation to the
+    world. 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
