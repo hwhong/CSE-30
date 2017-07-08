@@ -1,1 +1,174 @@
+---------------------------------------------------------[   PA1 README   ]---
 
+Author: Hwa Chien Hong
+Userid: cs30xnp
+PID: A92072250
+Date: Feb 26, 2017
+
+---------------------------------------------------------[  DESCRIPTION   ]---
+
+PA1 is an assignment that aims to help us gain more experience with C
+programming, the Standard C LIbrary routines, system calls, dynamic memory
+allocation on the heap using malloc, calloc, and realloc, sorting using qsort
+and a comparison function, reading data from ascii files with fgets(), and more
+string manipulation using strlen, strchr, strncpy, strncmp, and strncat. Also
+writing an interactive program that takes words from stdin and searches for the
+corresponding anagrams from a dictionary file. The program will run until the
+user types the control sequence to indicate no more input.
+
+
+The correct output of the program is as followed: once the user complies and
+runs the program, he/she could enter a word to find the correponding anagram.
+Under the hood, the dictionary is first being read by the program, then adds the
+neccessary anagrams, words, tableEntries into the hashtable structure. Then once
+an input is being read, we convert the word into uppercase and proceed to find a
+sorted sequence in the anagram that has the same sorted order and sequence of
+numbers. Once it is found, we would traverse down the words array to look for
+words that are grouped in the same structure. 
+
+Below lists the description of each indivdual files : 
+
+isInBounds(): an assembly subroutine that checks whether a number is in the
+bounds given the min and max values of which this number can exists in. If it
+is inBound 0 is returned, otherwise -1 is returned.
+
+hash(): this assembly subroutine is the function that creates the index of 
+which a given word would be placed in. The hash value of the word is calculated
+by using the hash function that is similiar to the one in java.
+
+getTableIndex(): this assembly subroutine calculates where in the table the word
+would go in. The return value of this function would be the index of ucSorted in
+the hashTable. 
+
+charCompare(): this assembly subroutine takes in two pointers to characters and
+compares them. if the first char is smaller, -1 is returned. If they are the
+same, 0 is returned. anything else 1 is returned.
+
+usage(): this c function prints out the appropriate message given the enum which
+corresponds to either the short or long message. The usage message will be
+printed to the specified stream that is passed in as a parameter. 
+
+upperCaseSortString(): this c function will take the src string and will store a
+copy in dest where all the characters are converted to uppercase and sorted in
+alphabetical order. 
+
+printStats(): the printStats function will print out various statistics abou
+the hashtable entry at the given index. Search through its array of Anagram
+structs to display the number of collisions, words that appeared the most or
+leas, as well as the number of words in that anagram struct. 
+
+main(): this function is the driver of the whole program. Its main tasks are to
+parse the command line arguments, build the hashtable, and enter either
+interactive mode or statistics mode. It parses the commands by using getopt and
+receives the results via optarg.
+
+loadDict(): this function opens and read the dictoinary word by word  into
+memory. It first opens the file for reading using fopen, the checks of
+permission and validity of the file. Then using loop structures to allocate
+individual space for each tableEntry, anagram, and words. 
+
+initAnagram(): this c function initializes an angram struct for the src string
+passed in. Using the upperCaseSortString to make the sortedWord, and allocate
+space for the words array in the struct itself. It also adds the src word to the
+words array.
+
+findAnagram(): This c function handles the interactive part of the assignment.
+It first prompts the user to enter a word and then prints any matching anagram
+of that word, excluding the word itself. This happens in a loop until the user
+chooses to quit with the EOF key.
+
+---------------------------------------------------------[     TESTING    ]---
+To test these files, the indivudal subroutines each have their own tester files.
+I tested almost every single function that was written in the assignment. Some
+functions do not have their own testers as I could test 2 methods in the same
+tester file. For example to test for loadDict, I had to create a hashtable
+struct inside the tester file, then proceed to pass in the table. However, I
+could also use this tester file to test for findAnagrams. This is because there
+is already hashtable that has the dictionary loaded in and I could just simply
+pass in the same hashtable to test for the functionality of that program. To
+test for other methods such as initAnagram, I individually find out what each
+value of the member variable is after calling this method. Only when the
+initAnagram words pefectly, then I moved on to writing other methods that uses
+this method, such as findAnagra, and loadDict.
+
+one particular trouble I had with testing is because of the complexity of the
+program. Since the program is so complex with so many different functions, I
+passed in various of different test values in the program, as such the final
+result is outputting weirdly even though each invidual program is correct after
+testing them all.
+---------------------------------------------------------[  COMPILATION   ]---
+
+in order to successfully compile all the programs/files at once, the make 
+command is used, namely 
+
+	$ make 
+
+After the programs are compiled with no issues, they are ran by typing the 
+following commands 
+
+	$ ./pa3 [-f dictFile] [-s tableSize] [-i index] [-h]
+
+It is important to note that the flags are optional to enter. Depending on
+whether the user wants to specifiy a different dictionary or wants a differently
+sized hashtable, the hashtable would be initialized differently. THe user could
+also go into the index of tableentry to inspect the information of the entry. If
+-i is entered, things like the numWords, the word with most anagrams and least
+anagrams would be printed out.
+
+Once the interactive prompt shows up, the user could enter a word to find its
+anagram. If at any time the user wish to leave, he/she could enter EOF or
+control D to exit the program
+
+To test/run the testerfiles, we have to do
+	$ make test[FILENAME]
+	$ ./[FILENAME]
+for different testfiles just simply replace the [FILENAME]
+
+---------------------------------------------------------[ SAMPLE OUTPUT  ]---
+
+Normal output: 
+
+$./pa3
+
+Enter a word to search for anagrams [^D to exit] : POST
+Anagram(s) are: spot spot
+
+Enter a word to search for anagrams [^D to exit] : melon
+Anagram(s) are: lemon Menlo monel
+
+* above shows when the user enters word POST and melon to find their anagra,s
+
+$./pa3 -i 0
+
+Displaying Stats for index [0]:
+	Number of collisions: 763
+	Number of words in the entry: 807
+	Word "rite" has the most anagrams (2).
+	Word "6th" has the least anagrams (0).
+
+* above shows when the user wish to inspect the information of a specfic
+  tableEntry
+
+Abnormal output: 
+$./pa3 extra
+	
+	Extra operand 'extra'.
+
+* In the case if there is an error with the user's input, a short usage message
+* would be printed out. Only in the case where the user places the -h flag, then
+* the long usage message would be printed out. 
+
+-----------------------------------------------------------[    Q & A    ]-----
+1. I undersand that when I enter the industry, integrity is quite possibly the
+most important aspect of a good software engineering, even more essential than a
+engineer who excels at programming. In such case, in order to prepare myself for
+the future, I keep in mind the importance of integrity and powers through. 
+
+2. When the table size is 1, it takes much more time to load the dictionary
+relative to file size of 100 or 200. This is because when the table size is 1,
+we are only hashing all anagrams to a single table entry. This takes up a lot of
+time because when we are adding new words, we have to run through the exisitng
+array of anagrams and find if there is a match between our word and the sorted
+word of the anagram, as such its a linear runtime on this end as oppose to when
+we have many tableentries, where we only have to iterate through a smaller
+portion of array of anagrams. 
