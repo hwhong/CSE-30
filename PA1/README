@@ -1,1 +1,182 @@
+---------------------------------------------------------[   PA1 README   ]---
+
+Author: Hwa Chien Hong
+Userid: cs30xnp
+PID: A92072250
+Date: Jan 28, 2017
+
+---------------------------------------------------------[  DESCRIPTION   ]---
+
+PA1 is an assignment that aims to help us students to become more familiar
+with the SPARC assembly language, especially branching and looping logic, 
+calling assembly routines from with a C program, calling other assembly routines  
+, passing parameters and returning values, using UNIX command line arguments,
+and also learning Standard C library routines. 
+
+
+The correct output of the program is as followed: once the user puts in the four
+required parameters (i.e width, zchar, borderchar, and filler char), the main C
+program first checks if these inputs are valid. By testing whether a char is in
+the bound of english character ASCII values. it also tests if the width entered
+is odd. Once the checking are done, the character Z will be printed onto the
+screening with different characters filling the "z", border, and inside the
+border. 
+
+Below lists the description of each indivdual files : 
+
+isOdd: the assembly routine that when provided with a long, tells whether the
+number is odd or even by returning either 1 or 0. 
+
+isInBounds: given the lower bounded number, and a distance from the lower bound,
+and also the number to test, tells the user whether the number is within those
+bounds. This is calculated by adding the distance to the lower bound, and
+comparing the number to test to the lower and upper bound. 
+
+numOfDigits: the numOfDigits routine tells the user how many digit does the
+provided number have. This is calculated by continuously dividing the number by
+10, and increment a variable counter as the number is not equal to zero. 
+
+drawZ: the assembly file that actually draws the letter z. this is done by
+calling several methods from the other assembly file. for instance, the
+numOfDigits routine is called to become one of the stopping conditions for a for
+loop. 
+
+printChar: this assembly routine, when takes in a long, returns the ASCII
+representation of that char and prints it out. 
+
+main.C: this is the main file where all the checking of the parameters are done.
+First checks the given width if it is inBound. then proceeds to check whether
+the other given parameters (zchar, filler, and border) are inbound, valid, and
+not overlapping. 
+
+---------------------------------------------------------[     TESTING    ]---
+To test these files, the indivudal subroutines each have their own tester files.
+I.e to test isInBound, I tried multiple negative values and positive values to
+see if I am actually taking care of the bounds correctly. To test for isOdd, I
+tried all the even numbers first, and then odd numbers, then a mix of two, to
+finally make sure they are in fact correct. To test numOfDigits, I tested by
+cataegories, meaning testing five numbers with the same number of digits at the
+same time and so on and so fourth. For the drawZ function, I first made a main.c
+file that dosent check bad input, but just simply prints the char i asked it to
+print. 
+---------------------------------------------------------[  COMPILATION   ]---
+
+in order to successfully compile all the programs/files at once, the make 
+command is used, namely 
+
+	$ make 
+
+After the programs are compiled with no issues, they are ran by typing the 
+following commands 
+
+	$ ./pa1 [WIDTH] [Z_CHAR] [BORDER_CHAR] [FILLER_CHAR]
+
+It is important to note that the chars are enclosed by single quotes as the
+parameters are of type long. Also, in order to compile these programs, we have
+to be in the pa1 directory. Once all the routines are linked, then we can print
+out the desire output. 
+
+To test/run the testerfiles, we have to do
+	$ make test[FILENAME]
+	$ ./[FILENAME]
+for different testfiles just simply replace the [FILENAME]
+
+---------------------------------------------------------[ SAMPLE OUTPUT  ]---
+
+Normal output: 
+
+$./pa1 5 '^' z " "
+zzzzzzz
+z^^^^^z
+z    ^z
+z   ^ z
+z  ^  z
+z ^   z
+z^    z
+z^^^^^z
+zzzzzzz 
+
+Above shows the normal output if the given width is 5, and the zchar is ^, and
+the border char is z, and the filler char is a empty char. 
+
+If the inputs are not correct, then error messages will be printed out, some
+example error messages  are 
+- z character 10 not in bounds [32-126]
+- width 5a is not a valid long 
+- Value 99999999 cannot be converted to long in base 10: result too large 
+- filler character 32 is not a valid character 
+- Border character 32 is not a valid single character 
+
+---------------------------------------------------------[    Q and A     ]---
+
+1. Once you are in the strtol method, we could do the command 
+	(gdb) p argv[1] to print the first argument in the method 
+
+2.  you could inspect the element by doing p/d argv[3]. 
+
+3. you would do the command p/x argv[2] to inspect it in terms of hex
+
+4. Using the first way, we would just do print [VARIABLE_NAME]
+   Using the second way, we would do print $o0, which is the first output 
+
+5. you would dereference the pointer and then print it. i.e print *endptr
+
+6. print endptr 
+
+7. p/d errno 
+
+8. git status
+
+9. git stash save --keep-index 
+
+10. git diff 
+
+11. I made sure to reference any sources I used on the top of each file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
